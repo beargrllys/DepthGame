@@ -18,7 +18,7 @@ public class GameManage : MonoBehaviour
     public int RandRange;
     public GameObject[] GameScript;
     public TextMeshProUGUI titleText;
-    private int StageCount = 0;
+    private int StageCount = 1;
     private int RandGameNum;
 
     [Header("Result")]

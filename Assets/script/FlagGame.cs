@@ -129,19 +129,19 @@ public class FlagGame : MonoBehaviour
         {
             randval = Random.Range(0, Easy.Length);
             GameSound.PlayOneShot(Easy[randval]);
-            yield return new WaitForSeconds(Easy[randval].length + 0.5f);
+            yield return new WaitForSeconds(Easy[randval].length + 1f);
         }
         else if (hardness == 1)
         {
             randval = Random.Range(0, Normal.Length);
             GameSound.PlayOneShot(Normal[randval]);
-            yield return new WaitForSeconds(Normal[randval].length + 0.5f);
+            yield return new WaitForSeconds(Normal[randval].length + 1f);
         }
         else if (hardness == 2)
         {
             randval = Random.Range(0, Hard.Length);
             GameSound.PlayOneShot(Hard[randval]);
-            yield return new WaitForSeconds(Hard[randval].length + 1.0f);
+            yield return new WaitForSeconds(Hard[randval].length + 1f);
         }
 
         if (hardness == 0)

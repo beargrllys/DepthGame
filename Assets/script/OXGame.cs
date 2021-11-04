@@ -101,12 +101,12 @@ public class OXGame : MonoBehaviour
         QuizBox.text = quizlist[randval];
         GameSound.PlayOneShot(QuizClip[randval]);
         yield return new WaitForSeconds(QuizClip[randval].length);
-        _GM.ChangeTitle(0.5f, "3");
-        yield return new WaitForSeconds(0.5f);
-        _GM.ChangeTitle(0.5f, "2");
-        yield return new WaitForSeconds(0.5f);
-        _GM.ChangeTitle(0.5f, "1");
-        yield return new WaitForSeconds(0.5f);
+        _GM.ChangeTitle(1f, "3");
+        yield return new WaitForSeconds(1f);
+        _GM.ChangeTitle(1f, "2");
+        yield return new WaitForSeconds(1f);
+        _GM.ChangeTitle(1f, "1");
+        yield return new WaitForSeconds(1f);
         if (Quiz_ans[randval] == choice)
         {
             QuizBox.text = "Good!";
