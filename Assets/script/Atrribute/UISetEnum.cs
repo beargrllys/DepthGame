@@ -8,7 +8,9 @@ namespace UIset
     {
         Intro = 0,
         FlagGame = 1,
-        OXGame = 2
+        OXGame = 2,
+        AvoidPunch = 3,
+        Squart = 4
     }
 }
 

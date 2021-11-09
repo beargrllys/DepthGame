@@ -29,13 +29,19 @@ public class GameManage : MonoBehaviour
     public bool init_start = false;
     public bool GamePlaying;
 
+    public int PlayCount;
+
     // Start is called before the first frame update
     void Update()
     {
         if (init_start && _ACT._BoneMap[(int)Kinect.JointType.SpineBase] != null && !GamePlaying)
         {
             GamePlaying = true;
-            RandomGameStart();
+            if (PlayCount == 0)
+            {
+                RandomGameStart();
+                PlayCount++;
+            }
         }
     }
 
@@ -44,7 +50,7 @@ public class GameManage : MonoBehaviour
         RandGameNum = Random.Range(0, 200);
         RandGameNum = RandGameNum % RandRange;
         //--------------------Debug Code-----------------//
-        //RandGameNum = 1;
+        //RandGameNum = 3;
         //--------------------Debug Code-----------------//
         Debug.Log("Game : " + RandGameNum);
         switch (RandGameNum)
@@ -59,6 +65,18 @@ public class GameManage : MonoBehaviour
                 OXGame _OXg;
                 _OXg = GameScript[1].GetComponent<OXGame>();
                 _OXg.Setting();
+                StartCoroutine("gameStart");
+                break;
+            case 2:
+                AvoidPunch _AVP;
+                _AVP = GameScript[2].GetComponent<AvoidPunch>();
+                _AVP.Setting();
+                StartCoroutine("gameStart");
+                break;
+            case 3:
+                Squart _SQT;
+                _SQT = GameScript[3].GetComponent<Squart>();
+                _SQT.Setting();
                 StartCoroutine("gameStart");
                 break;
         }
@@ -80,12 +98,25 @@ public class GameManage : MonoBehaviour
                 _OXg.GameStart = true;
 
                 break;
+            case 2:
+                AvoidPunch _AVP;
+                _AVP = GameScript[2].GetComponent<AvoidPunch>();
+                _AVP.GameStart = true;
+
+                break;
+            case 3:
+                Squart _SQT;
+                _SQT = GameScript[3].GetComponent<Squart>();
+                _SQT.GameStart = true;
+
+                break;
         }
     }
 
     public void GameFinish()
     {
         StageCount++;
+        PlayCount--;
         GamePlaying = false;
     }
 
