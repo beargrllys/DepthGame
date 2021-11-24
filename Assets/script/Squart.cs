@@ -25,7 +25,7 @@ public class Squart : MonoBehaviour
 
     [Header("Audio Set")]
     public AudioSource GameSound;
-    [LabeledArray(new string[] { "finish" })]
+    [LabeledArray(new string[] { "finish", "OneMoreTime" })]
     public AudioClip[] SE;
 
     [Header("Control Variable")]
@@ -154,21 +154,27 @@ public class Squart : MonoBehaviour
 
     IEnumerator TrainSquart()
     {
-        OrderTxt.text = "스쿼트 5번!";
+        OrderTxt.text = "스쿼트 3번!";
         yield return new WaitForSeconds(2f);
-        while (squartCount != 5)
+        while (squartCount != 3)
         {
             yield return new WaitForEndOfFrame();
-            OrderTxt.text = squartCount.ToString() + " / 5";
+            OrderTxt.text = squartCount.ToString() + " / 3";
         }
         squartCount = 0;
         OrderTxt.text = "0 / 1";
         preSquartDone = true;
         Trainer.sprite = TrainSpr[1];
         OrderImg.sprite = OrderSpr[1];
+        int preSquartCount = -1;
         while (moreSquartCount <= moreSquart)
         {
             yield return new WaitForEndOfFrame();
+            if (preSquartCount != moreSquartCount && preSquartCount != moreSquart)
+            {
+                GameSound.PlayOneShot(SE[1]);
+                preSquartCount = moreSquartCount;
+            }
             if (squartCount != 0)
             {
                 OrderTxt.text = "1 / 1";

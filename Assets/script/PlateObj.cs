@@ -11,7 +11,7 @@ public class PlateObj : MonoBehaviour
     bool Deadline = false;
     bool falling = true;
     bool catchPlate = false;
-    float speed = 1.8f;
+    float speed = 1.5f;
     void Start()
     {
         PlateMother = GameObject.FindGameObjectWithTag("plateOrigin").GetComponent<Plate>();
