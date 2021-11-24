@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Kinect = Windows.Kinect;
 using TMPro;
+using System.Linq;
 
 public class GameManage : MonoBehaviour
 {
@@ -31,11 +32,23 @@ public class GameManage : MonoBehaviour
 
     public int PlayCount;
 
+    private int HeartCount = 3;
+    public Image[] HeartIcon;
+    [LabeledArray(new string[] { "full", "empty" })]
+    public Sprite[] HeartKind;
+    public int[] RandomCnt = new int[7];
+    public int StageSet;
+
+    [Header("Debug Variable")]
+    public bool IgnoreFail;
     // Start is called before the first frame update
     void Update()
     {
         if (init_start && _ACT._BoneMap[(int)Kinect.JointType.SpineBase] != null && !GamePlaying)
         {
+            HeartIcon[0].enabled = true;
+            HeartIcon[1].enabled = true;
+            HeartIcon[2].enabled = true;
             GamePlaying = true;
             if (PlayCount == 0)
             {
@@ -44,14 +57,38 @@ public class GameManage : MonoBehaviour
             }
         }
     }
+    void Start()
+    {
+        RandomSet();
+    }
+
+    public void RandomSet()
+    {
+        List<int> GachaList = new List<int>() { 0, 1, 2, 4, 5, 6 };
+        RandomCnt[0] = 3;
+        for (int i = 1; i < 7; i++)
+        {
+            int rand = Random.Range(0, 6 - i);
+            RandomCnt[i] = GachaList[rand];
+            GachaList.RemoveAt(rand);
+        }
+        Debug.Log(RandomCnt[0] + " " + RandomCnt[1] + " " + RandomCnt[2] + " " + RandomCnt[3] + " " + RandomCnt[4] + " " + RandomCnt[5] + " " + RandomCnt[6]);
+    }
 
     public void RandomGameStart()
     {
-        RandGameNum = Random.Range(0, 200);
-        RandGameNum = RandGameNum % RandRange;
+        //RandGameNum = Random.Range(0, 200);
+        //RandGameNum = RandGameNum % RandRange;
         //--------------------Debug Code-----------------//
-        //RandGameNum = 3;
+        //RandGameNum = 6;
         //--------------------Debug Code-----------------//
+        if (StageSet == -1 || StageSet == 6)
+        {
+            RandomSet();
+            StageSet = 0;
+        }
+        RandGameNum = RandomCnt[StageSet];
+        StageSet++;
         Debug.Log("Game : " + RandGameNum);
         switch (RandGameNum)
         {
@@ -77,6 +114,24 @@ public class GameManage : MonoBehaviour
                 Squart _SQT;
                 _SQT = GameScript[3].GetComponent<Squart>();
                 _SQT.Setting();
+                StartCoroutine("gameStart");
+                break;
+            case 4:
+                MuGungHwa _MGW;
+                _MGW = GameScript[4].GetComponent<MuGungHwa>();
+                _MGW.Setting();
+                StartCoroutine("gameStart");
+                break;
+            case 5:
+                Plate _PLT;
+                _PLT = GameScript[5].GetComponent<Plate>();
+                _PLT.Setting();
+                StartCoroutine("gameStart");
+                break;
+            case 6:
+                PK _PK;
+                _PK = GameScript[6].GetComponent<PK>();
+                _PK.Setting();
                 StartCoroutine("gameStart");
                 break;
         }
@@ -110,14 +165,57 @@ public class GameManage : MonoBehaviour
                 _SQT.GameStart = true;
 
                 break;
+            case 4:
+                MuGungHwa _MGW;
+                _MGW = GameScript[4].GetComponent<MuGungHwa>();
+                _MGW.GameStart = true;
+
+                break;
+            case 5:
+                Plate _PLT;
+                _PLT = GameScript[5].GetComponent<Plate>();
+                _PLT.GameStart = true;
+
+                break;
+            case 6:
+                PK _PK;
+                _PK = GameScript[6].GetComponent<PK>();
+                _PK.GameStart = true;
+
+                break;
         }
     }
 
-    public void GameFinish()
+    public void GameFinish(bool HeartDown)
     {
-        StageCount++;
-        PlayCount--;
-        GamePlaying = false;
+        if (HeartDown)
+        {
+            if (!IgnoreFail)
+            {
+                HeartCount -= 1;
+                HeartIcon[HeartCount].sprite = HeartKind[1];
+            }
+            if (HeartCount == 0)
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false; //play모드를 false로.
+#else
+                    Application.Quit(); //어플리케이션 종료
+#endif
+            }
+            else
+            {
+                StageCount++;
+                PlayCount--;
+                GamePlaying = false;
+            }
+        }
+        else
+        {
+            StageCount++;
+            PlayCount--;
+            GamePlaying = false;
+        }
     }
 
     IEnumerator gameStart()

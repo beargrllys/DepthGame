@@ -10,6 +10,7 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
     public UIManager _UIM;
     public BodySourceView _BSV;
     public GameManage _GM;
+    public Tutorial _TUTO;
 
     public bool testVal = false;
     public GameObject Img;
@@ -25,6 +26,11 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
     [Header("Game Lobby")]
     public GameObject RightHand;
     public GameObject LeftHand;
+    public GameObject TutoBtn;
+    public Sprite[] CountDown = new Sprite[5];
+    public Image CountNum;
+    public GameObject GazyBar;
+    public GameObject Gazy;
 
     void Start()
     {
@@ -73,9 +79,10 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
     {
         bool cond1 = false;//오른손 아이콘에 오른손
         bool cond2 = false;//왼손 아이콘에 왼손
+        bool TutoCond = false;
         bool PassStep = false;
         float WaitingT = 0f;
-        float std = 5.0f;
+        float std = 6.0f;
         while (!PassStep)
         {
             yield return new WaitForEndOfFrame();
@@ -83,16 +90,64 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
             {
                 cond1 = judgeByGameObject((int)Kinect.JointType.HandTipRight, RightHand);
                 cond2 = judgeByGameObject((int)Kinect.JointType.HandTipLeft, LeftHand);
-                //Debug.Log("cond1" + cond1 + " / " + "cond2" + cond2);
+                TutoCond = judgeByGameObject((int)Kinect.JointType.HandTipRight, TutoBtn);
+                if (TutoCond)
+                {
+                    float G_scale;
+                    GazyBar.SetActive(true);
+                    WaitingT += Time.deltaTime;
+                    if (WaitingT < 3.0f)
+                    {
+                        G_scale = WaitingT / 3.0f;
+                        Gazy.transform.localScale = new Vector3(G_scale, 1, 1);
+                    }
+                    else
+                    {
+                        _UIM.UISetOff((int)UIset.SetName.Intro);
+                        _UIM.UISetOn((int)UIset.SetName.Tutorial);
+                        _TUTO.Setting();
+                    }
+                }
+                else
+                {
+                    GazyBar.SetActive(false);
+                    Gazy.transform.localScale = new Vector3(0, 1, 1);
+                }
                 if (cond1 && cond2)
                 {
                     WaitingT += Time.deltaTime;
-                    if (WaitingT >= std)
+                    if (WaitingT <= 1.0f)
+                    {
+                        CountNum.enabled = true;
+                        CountNum.sprite = CountDown[4];
+                    }
+                    else if (WaitingT <= 2.0f)
+                    {
+                        CountNum.sprite = CountDown[3];
+                    }
+                    else if (WaitingT <= 3.0f)
+                    {
+                        CountNum.sprite = CountDown[2];
+                    }
+                    else if (WaitingT <= 4.0f)
+                    {
+                        CountNum.sprite = CountDown[1];
+                    }
+                    else if (WaitingT <= 5.0f)
+                    {
+                        CountNum.sprite = CountDown[0];
+                    }
+                    else if (WaitingT <= std)
                     {
                         PassStep = true;
                         _UIM.UISetOff((int)UIset.SetName.Intro);
                         _GM.init_start = true;
                     }
+                }
+                if (!cond1 && !cond2 && !TutoCond)
+                {
+                    WaitingT = 0f;
+                    CountNum.enabled = false;
                 }
             }
         }

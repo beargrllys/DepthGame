@@ -188,20 +188,15 @@ public class FlagGame : MonoBehaviour
                 scoreStr[2] = 'X';
             }
             _GM.ChangeTitle(1.0f, new string(scoreStr));
+            yield return new WaitForSeconds(2f);
             if (inGameScore == 60)
             {
-                _GM.show_Result('A');
+                _GM.GameFinish(false);
             }
-            else if (inGameScore >= 30)
+            else
             {
-                _GM.show_Result('B');
+                _GM.GameFinish(true);
             }
-            else if (inGameScore < 30)
-            {
-                _GM.show_Result('C');
-            }
-            yield return new WaitForSeconds(2f);
-            _GM.GameFinish();
         }
     }
 }

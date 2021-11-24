@@ -55,7 +55,7 @@ public class Squart : MonoBehaviour
         _ACT.activeJoint[15] = true;
         _ACT.activeJoint[19] = true;
         _ACT.UpdateJoint();
-        moreSquart = Random.Range(3, 5);
+        moreSquart = Random.Range(1, 3);
         squartCount = 0;
         moreSquartCount = 0;
         prePos = 0;
@@ -178,6 +178,6 @@ public class Squart : MonoBehaviour
             }
         }
         GameSound.PlayOneShot(SE[0]);
-        _GM.GameFinish();
+        _GM.GameFinish(false);
     }
 }

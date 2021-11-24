@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 
-    [LabeledArray(new string[] { "Intro", "FlagGame", "OXGame", "AvoidPunch", "Squart" })]
+    [LabeledArray(new string[] { "Intro", "FlagGame", "OXGame", "AvoidPunch", "Squart", "Tutorial", "MuGungHwa", "Plate", "PK" })]
     public GameObject[] UISet;
 
     public void UISetOff(int setName)

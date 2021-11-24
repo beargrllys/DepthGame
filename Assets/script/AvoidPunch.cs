@@ -115,7 +115,7 @@ public class AvoidPunch : MonoBehaviour
             StopCoroutine(Corutines[2]);
         }
     }
-    public void reset()
+    public void reset(bool HeartDown)
     {
         SepLine.SetActive(false);
         RedShield.SetActive(false);
@@ -127,7 +127,7 @@ public class AvoidPunch : MonoBehaviour
         AvoidFail.SetActive(false);
         stopCor();
         StopAllCoroutines();
-        _GM.GameFinish();
+        _GM.GameFinish(HeartDown);
     }
 
     public void result(bool sucessOrFail)
@@ -174,13 +174,13 @@ public class AvoidPunch : MonoBehaviour
         {
             AvoidSucess.SetActive(true);
             yield return new WaitForSeconds(1f);
-            reset();
+            reset(false);
         }
         else
         {
             AvoidFail.SetActive(true);
             yield return new WaitForSeconds(1f);
-            reset();
+            reset(true);
         }
     }
 

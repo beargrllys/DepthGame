@@ -111,6 +111,7 @@ public class OXGame : MonoBehaviour
         {
             QuizBox.text = "Good!";
             yield return new WaitForSeconds(1.0f);
+            _GM.GameFinish(false);
         }
         else if (choice == 0)
         {
@@ -118,6 +119,7 @@ public class OXGame : MonoBehaviour
             QuizBox.text = "Times up!";
             yield return new WaitForSeconds(1.0f);
             DocPic.sprite = DocNormalPic;
+            _GM.GameFinish(true);
         }
         else
         {
@@ -125,7 +127,7 @@ public class OXGame : MonoBehaviour
             QuizBox.text = "Wrong!";
             yield return new WaitForSeconds(1.0f);
             DocPic.sprite = DocNormalPic;
+            _GM.GameFinish(true);
         }
-        _GM.GameFinish();
     }
 }
