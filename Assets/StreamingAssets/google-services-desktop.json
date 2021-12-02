@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "12095902560",
+    "firebase_url": "https://mobileappdb-2fefb.firebaseio.com",
+    "project_id": "mobileappdb-2fefb",
+    "storage_bucket": "mobileappdb-2fefb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12095902560:android:a382eaddb96457d3c54405",
+        "android_client_info": {
+          "package_name": "com.ict.DepthGame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12095902560-8144kp9o87ttcg1p5257ncl2sk394gsl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtzUgrFTbynckZf8HwCfmSMfQkc0-KBvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12095902560-8144kp9o87ttcg1p5257ncl2sk394gsl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

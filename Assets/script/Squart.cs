@@ -25,7 +25,7 @@ public class Squart : MonoBehaviour
 
     [Header("Audio Set")]
     public AudioSource GameSound;
-    [LabeledArray(new string[] { "finish", "OneMoreTime" })]
+    [LabeledArray(new string[] { "finish", "OneMoreTime", "Count" })]
     public AudioClip[] SE;
 
     [Header("Control Variable")]
@@ -108,6 +108,7 @@ public class Squart : MonoBehaviour
             if (preSquartDone)
                 moreSquartCount += 1;
             squartCount += 1;
+            GameSound.PlayOneShot(SE[2]);
             leaveAbove = false;
             downPoint = false;
             returnAbove = false;

@@ -44,6 +44,7 @@ public class PK : MonoBehaviour
         ScoreBox[0].enabled = false;
         ScoreBox[1].enabled = false;
         ScoreBox[2].enabled = false;
+        Score = 0;
     }
 
     // Update is called once per frame
@@ -74,6 +75,7 @@ public class PK : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < 3; i++)
         {
             RouteNum = Random.Range(1, 10);
@@ -99,7 +101,7 @@ public class PK : MonoBehaviour
             ballAnime.Rebind();
             Kicker.sprite = Kicker_Spr[0];
         }
-        if (Score >= 2)
+        if (Score >= 3)
         {
             _GM.GameFinish(false);
         }

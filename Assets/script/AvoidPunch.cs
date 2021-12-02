@@ -28,7 +28,7 @@ public class AvoidPunch : MonoBehaviour
 
     [Header("Audio Set")]
     public AudioSource GameSound;
-    [LabeledArray(new string[] { "ZamMin0", "ZamMin1", "ZamMin2", "Punch", "finish", "count" })]
+    [LabeledArray(new string[] { "ZamMin0", "ZamMin1", "ZamMin2", "Punch", "finish", "count", "Punch_Avoid", "Punch_Attack" })]
     public AudioClip[] SE;
 
     [Header("Control Variable")]
@@ -172,15 +172,19 @@ public class AvoidPunch : MonoBehaviour
         ColoredPunch[2].SetActive(false);
         if (result)
         {
-            AvoidSucess.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            //AvoidSucess.SetActive(true);
+            GameSound.PlayOneShot(SE[6]);
+            //yield return new WaitForSeconds(1f);
             reset(false);
+            yield return null;
         }
         else
         {
-            AvoidFail.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            //AvoidFail.SetActive(true);
+            GameSound.PlayOneShot(SE[7]);
+            //yield return new WaitForSeconds(1f);
             reset(true);
+            yield return null;
         }
     }
 

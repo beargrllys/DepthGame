@@ -35,7 +35,8 @@ public class MuGungHwa : MonoBehaviour
     private bool Running = false;
     private Vector3 init_bodyPos;
     private float standard = 16f;
-    private float Gazy_standard = 0.001f;
+    private float Gazy_standard = 0.0005f;
+    private float gazy_scale;
 
     public bool GameStart;
     public void Setting()
@@ -51,6 +52,7 @@ public class MuGungHwa : MonoBehaviour
         Checking = false;
         Running = false;
         init_bodyPos = Vector3.zero;
+        gazy_scale = Screen.width * Gazy_standard;
         _ACT.Reset();
         _ACT.activeJoint[0] = true;
         _ACT.activeJoint[1] = true;
@@ -146,7 +148,7 @@ public class MuGungHwa : MonoBehaviour
             waitTime += Time.deltaTime;//7번, 11번추적
             now_bodyPos = _ACT._BoneMap[7].transform.position + _ACT._BoneMap[11].transform.position;
             if ((pre_bodyPos - now_bodyPos).sqrMagnitude < 1f)
-                Gazy.transform.localScale += new Vector3((pre_bodyPos - now_bodyPos).sqrMagnitude * Time.deltaTime * 1.5f, 0, 0);
+                Gazy.transform.localScale += new Vector3((pre_bodyPos - now_bodyPos).sqrMagnitude * Time.deltaTime * gazy_scale, 0, 0);
             pre_bodyPos = now_bodyPos;
             if (Gazy.transform.localScale.x >= 1)
             {

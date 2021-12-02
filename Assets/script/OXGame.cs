@@ -29,6 +29,8 @@ public class OXGame : MonoBehaviour
 
     [Header("Audio Set")]
     public AudioSource GameSound;
+    [LabeledArray(new string[] { "Correct", "Wrong" })]
+    public AudioClip[] GameSE;
     public AudioClip[] QuizClip;
     public int[] Quiz_ans;
 
@@ -110,6 +112,7 @@ public class OXGame : MonoBehaviour
         if (Quiz_ans[randval] == choice)
         {
             QuizBox.text = "Good!";
+            GameSound.PlayOneShot(GameSE[0]);
             yield return new WaitForSeconds(1.0f);
             _GM.GameFinish(false);
         }
@@ -117,6 +120,7 @@ public class OXGame : MonoBehaviour
         {
             DocPic.sprite = DocWrongPic;
             QuizBox.text = "Times up!";
+            GameSound.PlayOneShot(GameSE[1]);
             yield return new WaitForSeconds(1.0f);
             DocPic.sprite = DocNormalPic;
             _GM.GameFinish(true);
@@ -125,6 +129,7 @@ public class OXGame : MonoBehaviour
         {
             DocPic.sprite = DocWrongPic;
             QuizBox.text = "Wrong!";
+            GameSound.PlayOneShot(GameSE[1]);
             yield return new WaitForSeconds(1.0f);
             DocPic.sprite = DocNormalPic;
             _GM.GameFinish(true);

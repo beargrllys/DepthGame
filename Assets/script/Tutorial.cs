@@ -101,7 +101,7 @@ public class Tutorial : MonoBehaviour
     {
         FemaleText.text = "";
         MaleText.text = "";
-        Debug.Log("Check");
+        //Debug.Log("Check");
         for (int i = 0; i < femaleT.Length; i++)
         {
             FemaleText.text += femaleT[i];

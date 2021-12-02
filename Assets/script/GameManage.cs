@@ -8,7 +8,10 @@ using System.Linq;
 
 public class GameManage : MonoBehaviour
 {
+
+    public UIManager _UIM;
     public AnimationController _ACT;
+    public Rank _RK;
 
     [Header("Audio")]
     public AudioSource SEAudio;
@@ -41,7 +44,6 @@ public class GameManage : MonoBehaviour
 
     [Header("Debug Variable")]
     public bool IgnoreFail;
-    // Start is called before the first frame update
     void Update()
     {
         if (init_start && _ACT._BoneMap[(int)Kinect.JointType.SpineBase] != null && !GamePlaying)
@@ -64,11 +66,11 @@ public class GameManage : MonoBehaviour
 
     public void RandomSet()
     {
-        List<int> GachaList = new List<int>() { 0, 1, 2, 4, 5, 6 };
+        List<int> GachaList = new List<int>() { 0, 1, 2, 4, 5, 6, 7 };
         RandomCnt[0] = 3;
         for (int i = 1; i < 7; i++)
         {
-            int rand = Random.Range(0, 6 - i);
+            int rand = Random.Range(0, 7 - i);
             RandomCnt[i] = GachaList[rand];
             GachaList.RemoveAt(rand);
         }
@@ -79,15 +81,15 @@ public class GameManage : MonoBehaviour
     {
         //RandGameNum = Random.Range(0, 200);
         //RandGameNum = RandGameNum % RandRange;
-        //--------------------Debug Code-----------------//
-        //RandGameNum = 6;
-        //--------------------Debug Code-----------------//
-        if (StageSet == -1 || StageSet == 6)
+        if (StageSet == -1 || StageSet == 7)
         {
             RandomSet();
             StageSet = 0;
         }
         RandGameNum = RandomCnt[StageSet];
+        //--------------------Debug Code-----------------//
+        //RandGameNum = 4;
+        //--------------------Debug Code-----------------//
         StageSet++;
         Debug.Log("Game : " + RandGameNum);
         switch (RandGameNum)
@@ -197,11 +199,9 @@ public class GameManage : MonoBehaviour
             }
             if (HeartCount == 0)
             {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false; //play모드를 false로.
-#else
-                    Application.Quit(); //어플리케이션 종료
-#endif
+                _RK.now_num = StageCount;
+                _UIM.UISetOn((int)UIset.SetName.Score);
+                _RK.ResultChap();
             }
             else
             {

@@ -19,10 +19,10 @@ public class BodyTracker : MonoBehaviour // UI와 Joint 겹침여부 확인/ 기
     {
         float x_min, x_max;
         float y_min, y_max;
-        x_min = UIPos.x - (size.x * scale.x);
-        x_max = UIPos.x + (size.x * scale.x);
-        y_min = UIPos.y - (size.y * scale.y);
-        y_max = UIPos.y + (size.y * scale.y);
+        x_min = UIPos.x - (size.x * scale.x * 0.5f);
+        x_max = UIPos.x + (size.x * scale.x * 0.5f);
+        y_min = UIPos.y - (size.y * scale.y * 0.5f);
+        y_max = UIPos.y + (size.y * scale.y * 0.5f);
 
         Vector3 screenPos = mainCamera.WorldToScreenPoint(jointPos);
         screenPos.z = 0;
