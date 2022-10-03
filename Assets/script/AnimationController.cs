@@ -16,6 +16,7 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
     public GameObject Img;
     private Image Img_opt;
     private bool bodyDetect;
+    //개발의 편의성을 위해 관절 부위 배열에 명칭 매칭
     [LabeledArray(new string[] { "SpineBase_0", "Neck_1", "SpineMid_2", "Head_3", "ShoulderLeft_4", "ElbowLeft_5", "WristLeft_6", "HandLeft_7", "ShoulderRight_8", "ElbowRight_9", "WristRight_10", "HandRight_11", "HipLeft_12", "KneeLeft_13", "AnkleLeft_14", "FootLeft_15", "HipRight_16", "KneeRight_17", "AnkleRight_18", "FootRight_19", "SpineShoulder_20", "HandTipLeft_21", "ThumbLeft_22", "HandTipRight_23", "ThumbRight_24" })]
     public GameObject[] _BoneMap = new GameObject[25];
 
@@ -36,7 +37,8 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
     {
         Img_opt = Img.GetComponent<Image>();
     }
-
+    
+    //트래킹 관절 부위 - 게임오브젝트 출동 여부 확인 
     public bool judgeByGameObject(int JointNum, GameObject UIImg)
     {
         Vector2 sizeset = new Vector3(Img_opt.rectTransform.sizeDelta.x, Img_opt.rectTransform.sizeDelta.y);
@@ -83,6 +85,7 @@ public class AnimationController : MonoBehaviour //게임진행을 위한 UI와 
         bool PassStep = false;
         float WaitingT = 0f;
         float std = 6.0f;
+        //시작시 양손이 시작지점에 있는지 
         while (!PassStep)
         {
             yield return new WaitForEndOfFrame();
